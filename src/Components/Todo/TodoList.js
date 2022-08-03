@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import TodosContext from '../../Contexts/Todos';
 
 import Todo from './Todo';
 
 function TodoList(props) {
   const [StatusTodos, setStatusTodos] = useState(false);
+  const todosContext = useContext(TodosContext);
 
-  const { todos } = props;
+  const { todos } = todosContext;
 
   const filterTodos = todos.filter((item) => item.done === StatusTodos);
 
@@ -46,15 +48,7 @@ function TodoList(props) {
           <p>There isn't any undone todos!</p>
         )
       ) : (
-        filterTodos.map((item) => (
-          <Todo
-            key={item.key}
-            item={item}
-            delete={props.delete}
-            changeStatus={props.changeStatus}
-            editTodo={props.editTodo}
-          />
-        ))
+        filterTodos.map((item) => <Todo key={item.key} item={item} />)
       )}
     </>
   );

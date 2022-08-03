@@ -7,6 +7,9 @@ import Footer from './Layout/Footer';
 import Jumbotron from './Layout/Jumbotron';
 import TodoList from './Todo/TodoList';
 
+// Importing Contexts
+import TodosContext from '../Contexts/Todos';
+
 class App extends Component {
   state = {
     todos: [],
@@ -55,23 +58,28 @@ class App extends Component {
   }
 
   render() {
+    const valueContext = {
+      todos: this.state.todos,
+      add: this.addItemToDos.bind(this),
+      delete: this.deleteToDo.bind(this),
+      done: this.changeStatusTodo.bind(this),
+      edit: this.editTodoName.bind(this),
+    };
+
     return (
       <div className="App">
         <Header />
         <main>
-          <Jumbotron add={this.addItemToDos.bind(this)} />
-          <div className="todosList">
-            <div className="container">
-              <div className="d-flex flex-column align-items-center ">
-                <TodoList
-                  todos={this.state.todos}
-                  delete={this.deleteToDo.bind(this)}
-                  changeStatus={this.changeStatusTodo.bind(this)}
-                  editTodo={this.editTodoName.bind(this)}
-                />
+          <TodosContext.Provider value={valueContext}>
+            <Jumbotron />
+            <div className="todosList">
+              <div className="container">
+                <div className="d-flex flex-column align-items-center ">
+                  <TodoList />
+                </div>
               </div>
             </div>
-          </div>
+          </TodosContext.Provider>
         </main>
         <Footer />
       </div>

@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import TodosContext from '../../Contexts/Todos';
 
-function FormAddToDo(props) {
+function FormAddToDo() {
   const [task, setTask] = useState('');
+  const todosContext = useContext(TodosContext);
 
   const inputHandler = (e) => setTask(e.target.value);
 
   const formHandler = (e) => {
     e.preventDefault();
-    props.add(task);
+    todosContext.add(task);
     setTask('');
   };
 

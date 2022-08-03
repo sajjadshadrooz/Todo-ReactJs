@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import TodosContext from '../../Contexts/Todos';
 import EditTodos from './EditTodos';
 
 function Todo(props) {
   const [edit, setEdit] = useState(false);
+  const todosContext = useContext(TodosContext);
   const { item } = props;
 
   const editTaskName = (task) => {
-    props.editTodo(item.key, task);
+    todosContext.edit(item.key, task);
     setEdit(false);
   };
 
@@ -29,14 +31,14 @@ function Todo(props) {
                 className={`btn btn-sm mx-sm-1 ${
                   item.done ? 'btn-warning' : 'btn-success'
                 }`}
-                onClick={() => props.changeStatus(item.key)}
+                onClick={() => todosContext.done(item.key)}
               >
                 {item.done ? 'Undone' : 'Done'}
               </button>
               <button
                 type="button"
                 className="btn btn-danger btn-sm "
-                onClick={() => props.delete(item.key)}
+                onClick={() => todosContext.delete(item.key)}
               >
                 Delete
               </button>
