@@ -8,7 +8,7 @@ function Todo(props) {
   const { item } = props;
 
   const editTaskName = (task) => {
-    todosContext.edit(item.key, task);
+    todosContext.dispatch({ type: 'edit', payload: { key: item.key, task } });
     setEdit(false);
   };
 
@@ -31,14 +31,24 @@ function Todo(props) {
                 className={`btn btn-sm mx-sm-1 ${
                   item.done ? 'btn-warning' : 'btn-success'
                 }`}
-                onClick={() => todosContext.done(item.key)}
+                onClick={() =>
+                  todosContext.dispatch({
+                    type: 'done',
+                    payload: { key: item.key, status: !item.done },
+                  })
+                }
               >
                 {item.done ? 'Undone' : 'Done'}
               </button>
               <button
                 type="button"
                 className="btn btn-danger btn-sm "
-                onClick={() => todosContext.delete(item.key)}
+                onClick={() =>
+                  todosContext.dispatch({
+                    type: 'delete',
+                    payload: { key: item.key },
+                  })
+                }
               >
                 Delete
               </button>

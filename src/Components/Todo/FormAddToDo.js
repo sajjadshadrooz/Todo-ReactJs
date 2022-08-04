@@ -9,7 +9,7 @@ function FormAddToDo() {
 
   const formHandler = (e) => {
     e.preventDefault();
-    todosContext.add(task);
+    todosContext.dispatch({ type: 'add', payload: { task } });
     setTask('');
   };
 
